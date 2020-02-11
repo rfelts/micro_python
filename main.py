@@ -72,7 +72,7 @@ def switch():
     return response_template % body
 
 
-adc = machine.ADC(0)
+adc = machine.ADC(15)
 
 
 def light():
