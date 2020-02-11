@@ -1,3 +1,8 @@
+import machine
+import ntptime, utime
+from machine import RTC
+from time import sleep
+
 try:
     import usocket as socket
 except:
@@ -17,10 +22,6 @@ response_template = """HTTP/1.0 200 OK
 
 %s
 """
-import machine
-import ntptime, utime
-from machine import RTC
-from time import sleep
 
 rtc = RTC()
 try:
@@ -71,12 +72,21 @@ def switch():
     return response_template % body
 
 
+adc = machine.ADC(0)
+
+
+def light():
+    body = "{value: " + adc.read() + "}"
+    return response_template % body
+
+
 handlers = {
     'time': time,
     'dummy': dummy,
     'light_on': light_on,
     'light_off': light_off,
     'switch': switch,
+    'light': light,
 }
 
 
